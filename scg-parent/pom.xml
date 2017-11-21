@@ -30,7 +30,7 @@
     <istack.version>2.11</istack.version>
   </properties>
   <repositories>
-    <repository>
+    <!--<repository>
       <id>Ali-Repository</id>
       <name>AliBaba</name>
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
@@ -39,7 +39,7 @@
       <id>Pagoda-Repository</id>
       <name>pagoda</name>
       <url>http://maven.dev.pagoda.com.cn:10008/nexus/content/groups/public</url>
-    </repository>
+    </repository>-->
   </repositories>
   <dependencyManagement>
     <dependencies>

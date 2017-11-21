@@ -7,9 +7,11 @@
         <relativePath>../scg-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>scg-api</artifactId>
+    <artifactId>scg-manager</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Maven Portlet Archetype</name>
+
+    <name>scg-manager</name>
     <url>http://maven.apache.org</url>
 
     <modules>
@@ -22,12 +24,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>portlet-api</groupId>
-            <artifactId>portlet-api</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.0.2</version>
@@ -38,4 +34,18 @@
             <version>1.0.4</version>
         </dependency>
     </dependencies>
+    <build>
+        <!-- 配置插件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>8080</port>
+                    <path>/</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
