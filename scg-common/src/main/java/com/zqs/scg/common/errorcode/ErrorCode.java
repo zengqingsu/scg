@@ -38,7 +38,7 @@ public enum ErrorCode {
     ERROR_ALREADY_FIRST(30006, "已是第一个，无法上移"),
     ERROR_ALREADY_LAST(30007, "已是最后一个，无法下移"),
     ERROR_OA_SUBMIT_FAIL(30008, "提交OA审核失败，无相关账号，请联系管理员！"),
-
+    ERROR__PARAM_CODE_MOBILE(30009, "手机号错误"),
 	/******************权限**************************/
 	ERROR_EXCEPTION_NAME_REPEAT(50001,"角色名称已存在"),
 	ERROR_EXCEPTION_USERROLE_REPEAT(50002,"用户已存在角色，不能重复添加"),
