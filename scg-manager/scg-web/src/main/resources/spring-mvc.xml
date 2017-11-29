@@ -2,90 +2,49 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
        default-autowire="byName">
 
-    <context:property-placeholder ignore-unresolvable="true" file-encoding="utf-8" location="classpath:web-api.properties"/>
-    <context:component-scan base-package="com.zqs" use-default-filters="true">
-    </context:component-scan>
-    <!--开启这个配置，spring才能识别@Scheduled注解   -->
-    <task:annotation-driven scheduler="qbScheduler"/>
-    <task:scheduler id="qbScheduler" pool-size="10"/>
+    <context:property-placeholder location="classpath:web-api.properties"/>
 
-    <!-- hibernate validator校验器 -->
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
-        <property name="validationMessageSource" ref="messageSource"/>
+    <!-- 配置SpringMVC -->
+
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
+        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
+    -->
+    <mvc:annotation-driven/>
+
+    <!--2. 扫描web相关的bean ,配置controller的注入-->
+    <context:component-scan base-package="com.zqs.scg.manager.web"/>
+
+    <!--3.静态资源默认servlet配置
+        (1)加入对静态资源的处理：js,gif,png
+        (2)允许使用"/"做整体映射
+     -->
+    <mvc:default-servlet-handler/>
+
+    <!--4.配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="fileEncodings" value="utf-8"/>
-        <property name="cacheSeconds" value="120"/>
+
+    <!-- 5.配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8" />
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000" />
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960" />
     </bean>
-
-    <mvc:annotation-driven conversion-service="conversionService" validator="validator">
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"/>
-
-            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-                <property name="features">
-                    <util:list>
-                        <value>WriteMapNullValue</value>
-                        <value>WriteNullStringAsEmpty</value>
-                    </util:list>
-                </property>
-            </bean>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes">
-                    <list>
-                        <value>text/html;charset=utf-8</value>
-                        <value>text/plain;charset=utf-8</value>
-                        <value>application/json;charset=UTF-8</value>
-                    </list>
-                </property>
-            </bean>
-        </mvc:message-converters>
-
-        <mvc:argument-resolvers>
-            <bean class="com.zqs.scg.common.paging.PagingParams"/>
-        </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-
-    <!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
-    <mvc:default-servlet-handler />
-
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean"/>
-
-    <!-- 前后端分离的登录跳转 -->
-    <bean id="toPortalPage" class="org.springframework.web.servlet.view.RedirectView">
-        <property name="exposeModelAttributes" value="false" />
-        <property name="url" value="${my.client.url}" />
-    </bean>
-
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/"></property> <!-- 视图文件的前缀 -->
-        <property name="suffix" value=".jsp"></property> <!-- 视图文件的后缀名 -->
-    </bean>
-
-    <!-- Spring mvc文件上传，需要配置MultipartResolver处理器 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8"/>
-        <!-- 上传文件大小限制为10M -->
-        <property name="maxUploadSize" value="10485760"/>
-        <property name="resolveLazily" value="true"/>
-    </bean>
-
-    <!-- aop  start -->
-    <context:component-scan base-package="com.zqs.scg" use-default-filters="true" />
-
-    <aop:config>
-        <aop:pointcut id="xxx" expression="execution(* com.zqs.scg..*.* (..))" />
-    </aop:config>
 
 </beans>
