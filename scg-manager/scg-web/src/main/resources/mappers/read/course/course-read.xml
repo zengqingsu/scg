@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqs.scg.manager.mapper.read.course.CourseReadDao">
+
+    <resultMap id="courseMap" type="course">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        <result column="c_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    </resultMap>
+    <sql id="courseSql">
+        id, c_name
+    </sql>
+     <select id="get" resultMap="courseMap">
+        SELECT
+        <include refid="courseSql"/>
+        FROM course
+        WHERE id = #{id}
+    </select>
+
+    <select id="listPage" resultMap="courseMap">
+        SELECT
+        <include refid="courseSql"/>
+        FROM course
+        <where>
+            <if test="name !=null and name != ''">c_name = #{name}</if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="batchList" resultMap="courseMap">
+        SELECT
+        <include refid="courseSql"/>
+        FROM course
+        WHERE id IN
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqs.scg.manager.mapper.write.grade.GradeWriteDao">
+
+    <resultMap id="courseMap" type="grade">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+       <!--  <result column="c_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/> -->
+    </resultMap>
+   
+</mapper>

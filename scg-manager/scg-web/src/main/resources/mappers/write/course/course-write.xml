@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqs.scg.manager.mapper.write.course.CourseWriteDao">
+
+
+    <insert id="insert" parameterType="course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO course
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="name != null">  c_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">  #{name,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <update id="update">
+        UPDATE course
+        <set>
+            <if test="name != null"> c_name = #{name,jdbcType=CHAR},</if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM course
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM course
+        WHERE id IN
+        <foreach item="id" index="index" collection="collection" open="(" separator="," close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>

@@ -11,7 +11,7 @@
     </settings>
 
     <typeAliases>
-        <package name="com.zqs.scg.manager.entity"/>
+        <package name="com.zqs.scg.manager.pojo"/>
     </typeAliases>
 
     <plugins>

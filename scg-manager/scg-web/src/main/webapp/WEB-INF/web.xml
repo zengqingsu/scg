@@ -5,7 +5,7 @@
   <!--以下配置的加载顺序:先 ServletContext >> context-param >> listener >> filter >> servlet >>  spring-->
   <context-param><!--全局范围内环境参数初始化-->
     <param-name>contextConfigLocation</param-name> <!--参数名称-->
-    <param-value>classpath:spring-dao.xml</param-value> <!--参数取值-->
+    <param-value>classpath:spring.xml</param-value> <!--参数取值-->
   </context-param>
   <!--***************监听器配置***********-->
   <!--例:spring监听器-->
@@ -40,14 +40,14 @@
     <url-pattern>/*</url-pattern>  <!--指定filter所对应的URL-->
   </filter-mapping>
 
-  <filter>
+  <!--<filter>
     <filter-name>requestFilter</filter-name>
     <filter-class>com.zqs.scg.common.requestutil.HttpServletRequestReplacedFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>requestFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
 
   <!--***************servlet配置***********-->
   <servlet>

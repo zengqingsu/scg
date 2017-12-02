@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zqs.scg.manager.mapper.read.grade.GradeReadDao">
+
+	<resultMap id="gradeMap" type="grade">
+    	<id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    	<result column="score" property="score" jdbcType="INTEGER" javaType="java.lang.Integer"/> 
+    	<association property="student" column="s_id" javaType="student">
+             <id property="id" column="id"/>
+             <result property="name" column="s_name"/>
+        </association>
+        <association property="course" column="c_id" javaType="course">
+             <id property="id" column="id"/>
+             <result property="name" column="c_name"/>
+        </association>
+   </resultMap>
+    
+    <select id="get"  resultMap="gradeMap">
+	    SELECT
+		g.id,
+		s.s_name,
+		c.c_name,
+		g.score
+		FROM grade g,student s,course c
+		WHERE s.id = g.s_id AND c.id = g.c_id AND g.id = #{id}
+    </select>
+     
+     <select id="getGradeReport" resultType="java.util.HashMap">
+        SELECT student.id,student.s_name,
+        MAX(CASE WHEN course.id=1 THEN grade.score ELSE 0 END) AS 数学, 
+        MAX(CASE WHEN course.id=2 THEN grade.score ELSE 0 END)AS 语文,
+        MAX(CASE WHEN course.id=3 THEN grade.score ELSE 0 END) AS 英语, 
+        MAX(CASE WHEN course.id=4 THEN grade.score ELSE 0 END) AS 理科 ,
+		MAX(CASE WHEN course.id=5 THEN grade.score ELSE 0 END) AS 文科 
+    	FROM student,course,grade 
+    	where student.id=grade.s_id and course.id=grade.c_id
+		GROUP BY student.s_name
+     </select>
+     
+</mapper>

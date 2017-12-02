@@ -16,9 +16,6 @@
 
     <modules>
         <module>scg-web</module>
-        <module>scg-service</module>
-        <module>scg-pojo</module>
-        <module>scg-mapper</module>
     </modules>
 
     <dependencies>

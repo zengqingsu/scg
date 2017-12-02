@@ -9,6 +9,7 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:jdbc.properties" />
+
     <!-- 数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
@@ -59,7 +60,7 @@
     </bean>
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.zqs.scg.manager.dao" />
+        <property name="basePackage" value="com.zqs.scg.manager.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sessionFactory" />
     </bean>
 
