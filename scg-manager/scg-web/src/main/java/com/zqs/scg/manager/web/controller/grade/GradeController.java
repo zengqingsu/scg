@@ -35,7 +35,7 @@ public class GradeController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/{id}",method =RequestMethod.GET)
+	@RequestMapping(value="/{id}",method =RequestMethod.GET,produces = "application/json;charset=UTF-8")
 	public AjaxResult getGrade(@PathVariable("id") Integer id) {
 		if (id==0||id<0) {
 			return AjaxResult.error(ErrorCode.ERROR_EXCEPTION_DB_DML.getCode(),ErrorCode.ERROR_EXCEPTION_DB_DML.getMsg());
@@ -50,7 +50,7 @@ public class GradeController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/all",method =RequestMethod.GET)
+	@RequestMapping(value="/all",method =RequestMethod.GET,produces = "application/json;charset=UTF-8")
 	public String  getGradeReport() {
 		List< Map<String, Object>> gradeReport = gradeService.getGradeReport();
 		String s = JSONObject.toJSONString(gradeReport);
