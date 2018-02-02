@@ -264,7 +264,7 @@
     <!--==================================== -->
     <!-- 打包配置:
     1、mvn package -DskipTests 打本地环境包，指定了dev为默认环境，顾不需要进行环境指定
-    2、mvn clean package -DskipTests -Pproduction  打生成环境包 ： -P{profile环境ID}
+    2、mvn clean package -DskipTests -Pprod  打生成环境包 ： -P{profile环境ID}
     3、mvn clean package -DskipTests -Ptest  打测试环境包 ： -P{profile环境ID}
     说明：通过 -P 指定 profile。
  -->
@@ -297,9 +297,9 @@
             </properties>
         </profile>
         <profile>
-            <id>production</id><!-- 生产环境 -->
+            <id>prod</id><!-- 生产环境 -->
             <properties>
-                <package.environment>production</package.environment>
+                <package.environment>prod</package.environment>
             </properties>
         </profile>
     </profiles>
