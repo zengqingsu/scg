@@ -12,6 +12,7 @@
     <artifactId>scg-web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging><!--打成war包-->
+    <name>scgweb</name>
 
     <dependencies>
         <!--依赖于项目模块 common-->
